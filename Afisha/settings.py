@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'moview_app.apps.MoviewAppConfig',
+    'movie_app.apps.MoviewAppConfig',
     'rest_framework',
 ]
 

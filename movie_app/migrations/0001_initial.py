@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
                     "director",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="moview_app.director",
+                        to="movie_app.director",
                     ),
                 ),
             ],
@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
                     "movie",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="moview_app.movie",
+                        to="movie_app.movie",
                     ),
                 ),
             ],

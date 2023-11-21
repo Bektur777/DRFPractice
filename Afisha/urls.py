@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from moview_app.views import *
+from movie_app.views import *
 
 api_v1 = 'api/v1/'
 
