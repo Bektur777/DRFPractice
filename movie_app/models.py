@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
+
 
 # Create your models here.
 
@@ -9,6 +11,10 @@ class Director(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def movies_count(self):
+        return Movie.objects.filter(director=self).count()
 
 
 class Movie(models.Model):
@@ -23,10 +29,37 @@ class Movie(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def average_rating(self):
+        reviews = Review.objects.filter(movie=self)
+
+        star_dict = {'*': 1, '**': 2, '***': 3, '****': 4, '*****': 5}
+
+        numeric_ratings = [star_dict[review.rate_stars] for review in reviews if review.rate_stars in star_dict]
+
+        if numeric_ratings:
+            return sum(numeric_ratings) / len(numeric_ratings)
+        else:
+            return None
+
+    @property
+    def all_reviews(self):
+        reviews = Review.objects.filter(movie=self)
+        return [{'id': i.id, 'text': i.text} for i in reviews]
+
 
 class Review(models.Model):
+    STARS = (
+        ('*', '*'),
+        ('**', '**'),
+        ('***', '***'),
+        ('****', '****'),
+        ('*****', '*****'),
+
+    )
     text = models.TextField(verbose_name="Комментарий")
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    rate_stars = models.CharField(max_length=100, choices=STARS, null=True)
 
     def __str__(self):
         return self.text
